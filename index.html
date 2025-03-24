@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitch Party - Book Sports Venues for Live Games</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2e58ff;
+            --primary-dark: #1a3cc0;
+            --secondary: #ff6b2e;
+            --secondary-dark: #e05420;
+            --dark: #222831;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-top: 1rem;
+        }
+
+        h3 {
+            font-size: 1.75rem;
+            margin-top: 0.75rem;
+        }
+
+        p, ul {
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 1.5rem;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Header and Navigation */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #2e58ff 0%, #574ae2 100%);
+            color: white;
+            padding: 10rem 0 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+            font-size: 3.5rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .hero-image {
+            position: absolute;
+            right: -5%;
+            bottom: -10%;
+            width: 50%;
+            max-width: 600px;
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            color: var(--primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 5rem 0;
+            background-color: #f5f7ff;
+        }
+
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            counter-reset: step-counter;
+        }
+
+        .step {
+            flex: 1 1 300px;
+            margin: 1rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-slide {
+            text-align: center;
+            padding: 1rem;
+            display: none;
+        }
+
+        .testimonial-slide.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .author {
+            font-weight: bold;
+        }
+
+        .author-title {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: var(--primary);
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--secondary) 0%, #ff8f59 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .app-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .app-button {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background-color: white;
+            color: var(--dark);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .app-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .app-button i {
+            font-size: 1.8rem;
+            margin-right: 0.8rem;
+        }
+
+        .app-button span {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .app-button .small-text {
+            font-size: 0.8rem;
+        }
+
+        .app-button .big-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            margin-top: 1.5rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            background: none;
+            border: none;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            .hero-image {
+                width: 45%;
+                opacity: 0.6;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 0;
+                padding: 0.8rem 2rem;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hero {
+                padding: 8rem 0 4rem;
+                text-align: center;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                display: none;
+            }
+            
+            .app-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .feature-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+               <img src="./blue_logo.png" width="50" height="50" alt="Pitch Party Logo"> Pitch Party
+            </div>
+            
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <!-- <li><a href="#" class="btn" id="login-btn">Login</a></li> -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Never Miss A Game With Friends Again!</h1>
+                <p>Discover and book the perfect spots to watch live sports in real-time. Connect with fellow fans and enjoy exclusive deals at the best venues.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="app-button">
+                        <i class="fab fa-apple"></i>
+                        <span>
+                            <span class="small-text">Download on the</span>
+                            <span class="big-text">App Store</span>
+                        </span>
+                    </a>
+                    
+                    <a href="#" class="app-button">
+                        <i class="fab fa-google-play"></i>
+                        <span>
+                            <span class="small-text">Get it on</span>
+                            <span class="big-text">Google Play</span>
+                        </span>
+                    </a>
+                </div>
+                <!-- <div class="hero-buttons">
+                    <a href="#" class="btn btn-secondary" id="download-btn">Download Now</a>
+                    <a href="#" class="btn" id="signup-btn">Sign Up Free</a>
+                </div> -->
+            </div>
+            <img src="/api/placeholder/600/500" alt="Pitch Party App Preview" class="hero-image">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Pitch Party?</h2>
+                <p>The ultimate app for sports fans to elevate their game-watching experience</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-search feature-icon"></i>
+                    <h3>Game-Centric Search</h3>
+                    <p>Filter venues by sport, team, or event. Find spots showing your game with giant screens, themed menus, or VIP seating.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-bolt feature-icon"></i>
+                    <h3>Instant Booking</h3>
+                    <p>Secure reservations in real-time—no more "sold out" disappointments. See live availability and confirm with a tap.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-users feature-icon"></i>
+                    <h3>Group-Friendly</h3>
+                    <p>Book spaces for large groups, split bills easily, and coordinate seamlessly with in-app chat.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-gift feature-icon"></i>
+                    <h3>Exclusive Perks</h3>
+                    <p>Unlock discounts, priority seating, and free snacks at partner venues. Earn rewards for every booking!</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-comments feature-icon"></i>
+                    <h3>Social Vibes</h3>
+                    <p>Connect with fellow fans, share event invites, or join trending game-night gatherings nearby.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-bell feature-icon"></i>
+                    <h3>Never Miss a Match</h3>
+                    <p>Get notified for upcoming matches, read venue reviews, and build your sports-watching community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Find your perfect spot in just a few simple steps</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <h3>Search By Game</h3>
+                    <p>Enter the sport, team, or specific game you want to watch. Our app shows venues that are confirmed to be showing your event.</p>
+                </div>
+                
+                <div class="step">
+                    <h3>Browse Venues</h3>
+                    <p>Compare venues by ratings, amenities, distance, or special offers. See real photos and reviews from other fans.</p>
+                </div>
+                
+                <div class="step">
+                    <h3>Book Instantly</h3>
+                    <p>Reserve your table or section directly through the app. Secure your spot with just a few taps.</p>
+                </div>
+                
+                <div class="step">
+                    <h3>Enjoy The Game</h3>
+                    <p>Show up, check in through the app, and enjoy the game! Rate your experience afterward to help other fans.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Fans Are Saying</h2>
+                <p>Join thousands of satisfied sports enthusiasts</p>
+            </div>
+            
+            <div class="testimonial-slider">
+                <div class="testimonial-slide active">
+                    <p class="quote">"Pitch Party saved our Champions League final night! We found an amazing venue with a giant screen and great atmosphere, all booked in seconds."</p>
+                    <p class="author">Mike Johnson</p>
+                    <p class="author-title">Soccer Fan, Chicago</p>
+                </div>
+                
+                <div class="testimonial-slide">
+                    <p class="quote">"As a venue owner, this app has brought in so many new customers during game days. The booking system is seamless, and the fans are always happy!"</p>
+                    <p class="author">Sarah Williams</p>
+                    <p class="author-title">Owner, The Sideline Bar</p>
+                </div>
+                
+                <div class="testimonial-slide">
+                    <p class="quote">"I organize weekly basketball watch parties, and Pitch Party makes it incredibly easy to find venues that can accommodate our large group. The split payment feature is a game-changer!"</p>
+                    <p class="author">David Chen</p>
+                    <p class="author-title">Basketball Fan, Austin</p>
+                </div>
+                
+                <div class="testimonial-dots">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Download Pitch Party Today</h2>
+            <p>Turn every game into a celebration. Get the best seats, the loudest cheers, and the most unforgettable nights.</p>
+            
+            <div class="app-buttons">
+                <a href="#" class="app-button">
+                    <i class="fab fa-apple"></i>
+                    <span>
+                        <span class="small-text">Download on the</span>
+                        <span class="big-text">App Store</span>
+                    </span>
+                </a>
+                
+                <a href="#" class="app-button">
+                    <i class="fab fa-google-play"></i>
+                    <span>
+                        <span class="small-text">Get it on</span>
+                        <span class="big-text">Google Play</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Pitch Party</h3>
+                    <p>Your gateway to live game nights, unleashed. Find the perfect venue for every match.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Venue Owners</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Pitch Party. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2>Sign In</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn">Sign In</button>
+                <p class="text-center" style="margin-top: 1rem;">
+                    Don't have an account? <a href="#" id="show-signup">Sign up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2>Create Account</h2>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="favorite-sports">Favorite Sports (select multiple)</label>
+                    <select id="favorite-sports" class="form-control" multiple>
+                        <option>Soccer</option>
+                        <option>Basketball</option>
+                        <option>Football</option>
+                        <option>Baseball</option>
+                        <option>Hockey</option>
+                        <option>Rugby</option>
+                        <option>Cricket</option>
+                        <option>Tennis</option>
+                        <option>Golf</option>
+                        <option>eSports</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Create Account</button>
+                <p class="text-center" style="margin-top: 1rem;">
+                    Already have an account? <a href="#" id="show-login">Sign in</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile navigation toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('nav ul');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            if (anchor.getAttribute('href') !== '#') {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId !== '#') {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                            // Close mobile menu if open
+                            navMenu.classList.remove('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        // Testimonial slider
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // Auto-rotate testimonials
+        setInterval(() => {
+            let nextSlide = currentSlide + 1;
+            if (nextSlide >= slides.length) {
+                nextSlide = 0;
+            }
+            showSlide(nextSlide);
+        }, 5000);
+
+       // Modal functionality
+const loginBtn = document.getElementById('login-btn');
+const signupBtn = document.getElementById('signup-btn');
+const loginModal = document.getElementById('login-modal');
+const signupModal = document.getElementById('signup-modal');
+const closeButtons = document.querySelectorAll('.close-modal');
+const showSignupLink = document.getElementById('show-signup');
+const showLoginLink = document.getElementById('show-login');
+const downloadBtn = document.getElementById('download-btn');
+
+function openModal(modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function closeAllModals() {
+    loginModal.style.display = 'none';
+    signupModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+loginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal(loginModal);
+});
+
+signupBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal(signupModal);
+});
+
+downloadBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('Thanks for your interest! The app download will be available soon.');
+});
+
+closeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        closeAllModals();
+    });
+});
+
+// Switch between login and signup modals
+showSignupLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    closeModal(loginModal);
+    openModal(signupModal);
+});
+
+showLoginLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    closeModal(signupModal);
+    openModal(loginModal);
+});
+
+// Close modal when clicking outside
+window.addEventListener('click', (e) => {
+    if (e.target === loginModal) {
+        closeModal(loginModal);
+    }
+    if (e.target === signupModal) {
+        closeModal(signupModal);
+    }
+});
+
+// Form submission handling
+const loginForm = document.getElementById('login-form');
+const signupForm = document.getElementById('signup-form');
+
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    // Here you would normally send this data to your server
+    console.log('Login attempt:', { email, password });
+    
+    // Simple validation feedback
+    if (email && password) {
+        alert('Login successful! Welcome back to Pitch Party.');
+        closeAllModals();
+        loginForm.reset();
+    } else {
+        alert('Please fill in all fields');
+    }
+});
+
+signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fullname = document.getElementById('fullname').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    
+    // Get selected sports (multiple select)
+    const sportsSelect = document.getElementById('favorite-sports');
+    const selectedSports = Array.from(sportsSelect.selectedOptions).map(option => option.value);
+    
+    // Here you would normally send this data to your server
+    console.log('Signup attempt:', { fullname, email, password, sports: selectedSports });
+    
+    // Simple validation feedback
+    if (fullname && email && password) {
+        alert('Account created successfully! Welcome to Pitch Party.');
+        closeAllModals();
+        signupForm.reset();
+    } else {
+        alert('Please fill in all required fields');
+    }
+});
+
+// Sticky header with scroll effect
+const header = document.querySelector('header');
+let lastScrollTop = 0;
+
+window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (scrollTop > 100) {
+        header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        header.style.padding = '0.7rem 0';
+    } else {
+        header.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.05)';
+        header.style.padding = '1rem 0';
+    }
+    
+    lastScrollTop = scrollTop;
+});
+
+// Animation on scroll functionality
+const animateOnScroll = () => {
+    const elements = document.querySelectorAll('.feature-card, .step, .section-header');
+    
+    elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (elementPosition < windowHeight - 50) {
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        }
+    });
+};
+
+// Initialize animation properties
+document.querySelectorAll('.feature-card, .step, .section-header').forEach(element => {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(20px)';
+    element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+});
+
+// Register scroll event for animations
+window.addEventListener('scroll', animateOnScroll);
+window.addEventListener('load', animateOnScroll);
+
+// Simple venue search simulation
+const searchDemo = () => {
+    const demoVenues = [
+        { name: "Sportszone Bar & Grill", location: "Downtown", rating: 4.7, matches: ["Soccer", "Basketball"] },
+        { name: "Champions Lounge", location: "Westside", rating: 4.5, matches: ["Football", "Basketball"] },
+        { name: "The Final Whistle", location: "Eastside", rating: 4.8, matches: ["Soccer", "Rugby"] },
+        { name: "Game Day Pub", location: "Midtown", rating: 4.6, matches: ["Baseball", "Hockey"] }
+    ];
+    
+    // Demo data could be displayed in a future search results section
+    console.log("Available venues:", demoVenues);
+    
+    // This could be expanded to create a dynamic search results display
+    return demoVenues;
+};
+
+// Initialize venue data
+const availableVenues = searchDemo();
+
+// Add loading animation for buttons
+const buttons = document.querySelectorAll('.btn');
+buttons.forEach(button => {
+    button.addEventListener('click', function(e) {
+        if (!this.classList.contains('loading') && !this.id.includes('login') && !this.id.includes('signup')) {
+            this.classList.add('loading');
+            const originalText = this.textContent;
+            this.textContent = 'Loading...';
+            
+            setTimeout(() => {
+                this.classList.remove('loading');
+                this.textContent = originalText;
+            }, 1500);
+        }
+    });
+});
+
+</script>
+</body>
+</html>
