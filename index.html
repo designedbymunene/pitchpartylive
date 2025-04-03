@@ -4,1174 +4,631 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pitch Party - Book Sports Venues for Live Games</title>
-    <style>
-        /* Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --primary: #2e58ff;
-            --primary-dark: #1a3cc0;
-            --secondary: #ff6b2e;
-            --secondary-dark: #e05420;
-            --dark: #222831;
-            --light: #f8f9fa;
-            --gray: #6c757d;
-        }
-
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-        }
-
-        /* Typography */
-        h1, h2, h3, h4 {
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        h1 {
-            font-size: 3rem;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            margin-top: 1rem;
-        }
-
-        h3 {
-            font-size: 1.75rem;
-            margin-top: 0.75rem;
-        }
-
-        p, ul {
-            margin-bottom: 1rem;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            padding: 0 1.5rem;
-            margin: 0 auto;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            text-decoration: none;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--secondary-dark);
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        /* Header and Navigation */
-        header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 2rem;
-        }
-
-        nav ul li a {
-            color: var(--dark);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        nav ul li a:hover {
-            color: var(--primary);
-        }
-
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--dark);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #2e58ff 0%, #574ae2 100%);
-            color: white;
-            padding: 10rem 0 6rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 600px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            margin-bottom: 1.5rem;
-            font-size: 3.5rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .hero-image {
-            position: absolute;
-            right: -5%;
-            bottom: -10%;
-            width: 50%;
-            max-width: 600px;
-            z-index: 1;
-            opacity: 0.8;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 5rem 0;
-            background-color: white;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-header h2 {
-            color: var(--primary);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            padding: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
-
-        .feature-card h3 {
-            color: var(--dark);
-            margin-bottom: 1rem;
-        }
-
-        /* How It Works Section */
-        .how-it-works {
-            padding: 5rem 0;
-            background-color: #f5f7ff;
-        }
-
-        .steps {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            counter-reset: step-counter;
-        }
-
-        .step {
-            flex: 1 1 300px;
-            margin: 1rem;
-            position: relative;
-            padding-left: 3rem;
-        }
-
-        .step::before {
-            counter-increment: step-counter;
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 2.5rem;
-            height: 2.5rem;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            padding: 5rem 0;
-            background-color: white;
-        }
-
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .testimonial-slide {
-            text-align: center;
-            padding: 1rem;
-            display: none;
-        }
-
-        .testimonial-slide.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .quote {
-            font-size: 1.2rem;
-            font-style: italic;
-            margin-bottom: 1.5rem;
-        }
-
-        .author {
-            font-weight: bold;
-        }
-
-        .author-title {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .testimonial-dots {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-            gap: 0.5rem;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #ddd;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .dot.active {
-            background-color: var(--primary);
-        }
-
-        /* CTA Section */
-        .cta {
-            padding: 5rem 0;
-            background: linear-gradient(135deg, var(--secondary) 0%, #ff8f59 100%);
-            color: white;
-            text-align: center;
-        }
-
-        .cta h2 {
-            margin-bottom: 1.5rem;
-        }
-
-        .app-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .app-button {
-            display: flex;
-            align-items: center;
-            padding: 0.8rem 1.5rem;
-            background-color: white;
-            color: var(--dark);
-            border-radius: 8px;
-            text-decoration: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .app-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .app-button i {
-            font-size: 1.8rem;
-            margin-right: 0.8rem;
-        }
-
-        .app-button span {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-            line-height: 1.2;
-        }
-
-        .app-button .small-text {
-            font-size: 0.8rem;
-        }
-
-        .app-button .big-text {
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 3rem 0 1.5rem;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-        }
-
-        .footer-column {
-            flex: 1;
-            min-width: 200px;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: var(--secondary);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-column ul li a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-column ul li a:hover {
-            color: white;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            color: white;
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--secondary);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid #444;
-            margin-top: 1.5rem;
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--gray);
-            background: none;
-            border: none;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            h2 {
-                font-size: 2rem;
-            }
-            .hero-image {
-                width: 45%;
-                opacity: 0.6;
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f5ff',
+                            100: '#e0ebff',
+                            200: '#c7dbff',
+                            300: '#a5c4ff',
+                            400: '#7ea2ff',
+                            500: '#5b7cff',
+                            600: '#3d5af5',
+                            700: '#2e46d8',
+                            800: '#263aae',
+                            900: '#25358a',
+                        },
+                        secondary: {
+                            50: '#fff7ed',
+                            100: '#ffeed4',
+                            200: '#ffd9a8',
+                            300: '#ffbe71',
+                            400: '#ff923d',
+                            500: '#ff6b11',
+                            600: '#f04e07',
+                            700: '#c73808',
+                            800: '#9e2d0f',
+                            900: '#7f2810',
+                        },
+                        dark: {
+                            50: '#f6f6f7',
+                            100: '#e2e2e5',
+                            200: '#c4c5ca',
+                            300: '#9fa0a8',
+                            400: '#7a7b86',
+                            500: '#5f606c',
+                            600: '#4a4b56',
+                            700: '#3d3d46',
+                            800: '#333339',
+                            900: '#2c2c30',
+                            950: '#1a1a1d',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
             }
         }
-
-        @media (max-width: 768px) {
-            nav ul {
+    </script>
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
+        
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at 10% 20%, rgba(46, 88, 255, 0.8) 0%, rgba(87, 74, 226, 0.9) 90%);
+        }
+        
+        .cta-gradient {
+            background: linear-gradient(135deg, rgba(255, 107, 17, 0.9) 0%, rgba(255, 146, 61, 0.9) 100%);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: rotateY(180deg);
+        }
+        
+        .testimonial-card {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .blob {
+            filter: blur(60px);
+            opacity: 0.2;
+        }
+        
+        .step-connector {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.5), rgba(99, 102, 241, 0.5));
+            top: 1.25rem;
+            left: 2.5rem;
+            right: 0;
+        }
+        
+        @media (max-width: 1024px) {
+            .step-connector {
                 display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                flex-direction: column;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-                padding: 1rem 0;
-            }
-            
-            nav ul.show {
-                display: flex;
-            }
-            
-            nav ul li {
-                margin: 0;
-                padding: 0.8rem 2rem;
-            }
-            
-            .hamburger {
-                display: block;
-            }
-            
-            .hero {
-                padding: 8rem 0 4rem;
-                text-align: center;
-            }
-            
-            .hero-content {
-                max-width: 100%;
-            }
-            
-            .hero-buttons {
-                justify-content: center;
-            }
-            
-            .hero-image {
-                display: none;
-            }
-            
-            .app-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        @media (max-width: 576px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            h2 {
-                font-size: 1.8rem;
-            }
-            
-            .btn {
-                width: 100%;
-                margin-bottom: 1rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-            }
-            
-            .feature-card {
-                padding: 1.5rem;
             }
         }
     </style>
-    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
-<body>
+<body class="font-sans text-dark-700 bg-gray-50">
     <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <div class="logo">
-               <img src="./images/blue_logo.png" width="50" height="50" alt="Pitch Party Logo"> Pitch Party
+    <header class="fixed w-full bg-white/90 backdrop-blur-md z-50 shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-futbol text-white text-lg"></i>
+                </div>
+                <span class="text-2xl font-display font-bold bg-gradient-to-r from-primary-600 to-primary-400 gradient-text">PitchParty</span>
             </div>
             
-            <button class="hamburger">
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="#features" class="font-medium text-dark-500 hover:text-primary-600 transition-colors">Features</a>
+                <a href="#how-it-works" class="font-medium text-dark-500 hover:text-primary-600 transition-colors">How It Works</a>
+                <a href="#testimonials" class="font-medium text-dark-500 hover:text-primary-600 transition-colors">Testimonials</a>
+            </nav>
+            
+            <button class="lg:hidden text-dark-500 text-2xl focus:outline-none" id="mobile-menu-button">
                 <i class="fas fa-bars"></i>
             </button>
-            
-            <nav>
-                <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <!-- <li><a href="#" class="btn" id="login-btn">Login</a></li> -->
-                </ul>
-            </nav>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="lg:hidden hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="#features" class="font-medium text-dark-500 hover:text-primary-600 transition-colors py-2">Features</a>
+                <a href="#how-it-works" class="font-medium text-dark-500 hover:text-primary-600 transition-colors py-2">How It Works</a>
+                <a href="#testimonials" class="font-medium text-dark-500 hover:text-primary-600 transition-colors py-2">Testimonials</a>
+            </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Never Miss A Game With Friends Again!</h1>
-                <p>Discover and book the perfect spots to watch live sports in real-time. Connect with fellow fans and enjoy exclusive deals at the best venues.</p>
-                <div class="hero-buttons">
-                    <a href="#" class="app-button">
-                        <i class="fab fa-apple"></i>
-                        <span>
-                            <span class="small-text">Download on the</span>
-                            <span class="big-text">App Store</span>
-                        </span>
-                    </a>
+    <section class="hero-gradient text-white pt-32 pb-20 relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6">
+                        Never Miss A Game <br>
+                        <span class="bg-gradient-to-r from-white to-primary-200 gradient-text">With Friends Again!</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-white/90 mb-8 max-w-lg">
+                        Discover and book the perfect spots to watch live sports in real-time. Connect with fellow fans and enjoy exclusive deals at the best venues.
+                    </p>
                     
-                    <a href="#" class="app-button">
-                        <i class="fab fa-google-play"></i>
-                        <span>
-                            <span class="small-text">Get it on</span>
-                            <span class="big-text">Google Play</span>
-                        </span>
-                    </a>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#" class="flex items-center bg-white text-dark-800 hover:bg-gray-100 px-6 py-3 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1">
+                            <i class="fab fa-apple text-3xl mr-3"></i>
+                            <div class="text-left">
+                                <div class="text-xs">Download on the</div>
+                                <div class="font-semibold">App Store</div>
+                            </div>
+                        </a>
+                        
+                        <a href="#" class="flex items-center bg-dark-800 hover:bg-dark-700 text-white px-6 py-3 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1">
+                            <i class="fab fa-google-play text-3xl mr-3"></i>
+                            <div class="text-left">
+                                <div class="text-xs">Get it on</div>
+                                <div class="font-semibold">Google Play</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="mt-8 flex items-center space-x-4">
+                        <div class="flex -space-x-2">
+                            <img src="https://randomuser.me/api/portraits/women/12.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                            <img src="https://randomuser.me/api/portraits/women/45.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                        </div>
+                        <div class="text-sm">
+                            <div class="font-medium">Join 10,000+ fans</div>
+                            <div class="text-white/80">Already enjoying PitchParty</div>
+                        </div>
+                    </div>
                 </div>
-                <!-- <div class="hero-buttons">
-                    <a href="#" class="btn btn-secondary" id="download-btn">Download Now</a>
-                    <a href="#" class="btn" id="signup-btn">Sign Up Free</a>
-                </div> -->
+                
+                <div class="lg:w-1/2 relative">
+                    <div class="relative max-w-md mx-auto lg:mr-0 lg:ml-auto">
+                        <div class="absolute -top-10 -left-10 w-64 h-64 bg-primary-300 rounded-full blob animate-float"></div>
+                        <div class="absolute bottom-0 -right-10 w-72 h-72 bg-secondary-300 rounded-full blob animate-float animation-delay-2000"></div>
+                        
+                        <div class="relative bg-white/10 backdrop-blur-md rounded-3xl overflow-hidden border border-white/20 shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                                 alt="Sports Venue" 
+                                 class="w-full h-auto rounded-t-3xl">
+                            <div class="p-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <div>
+                                        <h3 class="font-bold text-lg">Champions Sports Bar</h3>
+                                        <div class="flex items-center text-sm text-white/80">
+                                            <i class="fas fa-map-marker-alt mr-1"></i>
+                                            <span>Downtown • 0.3mi</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center bg-primary-500/20 px-3 py-1 rounded-full">
+                                        <i class="fas fa-star text-yellow-300 mr-1"></i>
+                                        <span class="font-medium">4.8</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <div class="text-xs text-white/60">Showing now:</div>
+                                        <div class="font-medium">Man Utd vs Liverpool</div>
+                                    </div>
+                                    <button class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <img src="/api/placeholder/600/500" alt="Pitch Party App Preview" class="hero-image">
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Why Choose Pitch Party?</h2>
-                <p>The ultimate app for sports fans to elevate their game-watching experience</p>
+    <section class="py-20 bg-white" id="features">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="inline-block bg-primary-50 text-primary-600 px-4 py-1 rounded-full text-sm font-medium mb-3">WHY CHOOSE US</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-4">Elevate Your Game Experience</h2>
+                <p class="text-dark-500">The ultimate app for sports fans to find the perfect venue for every match with exclusive perks and social features.</p>
             </div>
             
-            <div class="features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-search feature-icon"></i>
-                    <h3>Game-Centric Search</h3>
-                    <p>Filter venues by sport, team, or event. Find spots showing your game with giant screens, themed menus, or VIP seating.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-100">
+                    <div class="w-16 h-16 bg-primary-50 rounded-xl flex items-center justify-center mb-6 transition-all duration-500">
+                        <i class="fas fa-search text-3xl text-primary-600 feature-icon transition-transform duration-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-900 mb-3">Game-Centric Search</h3>
+                    <p class="text-dark-500">Filter venues by sport, team, or event. Find spots showing your game with giant screens, themed menus, or VIP seating.</p>
                 </div>
                 
-                <div class="feature-card">
-                    <i class="fas fa-bolt feature-icon"></i>
-                    <h3>Instant Booking</h3>
-                    <p>Secure reservations in real-time—no more "sold out" disappointments. See live availability and confirm with a tap.</p>
+                <!-- Feature 2 -->
+                <div class="feature-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-100">
+                    <div class="w-16 h-16 bg-primary-50 rounded-xl flex items-center justify-center mb-6 transition-all duration-500">
+                        <i class="fas fa-bolt text-3xl text-primary-600 feature-icon transition-transform duration-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-900 mb-3">Instant Booking</h3>
+                    <p class="text-dark-500">Secure reservations in real-time—no more "sold out" disappointments. See live availability and confirm with a tap.</p>
                 </div>
                 
-                <div class="feature-card">
-                    <i class="fas fa-users feature-icon"></i>
-                    <h3>Group-Friendly</h3>
-                    <p>Book spaces for large groups, split bills easily, and coordinate seamlessly with in-app chat.</p>
+                <!-- Feature 3 -->
+                <div class="feature-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-100">
+                    <div class="w-16 h-16 bg-primary-50 rounded-xl flex items-center justify-center mb-6 transition-all duration-500">
+                        <i class="fas fa-users text-3xl text-primary-600 feature-icon transition-transform duration-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-900 mb-3">Group-Friendly</h3>
+                    <p class="text-dark-500">Book spaces for large groups, split bills easily, and coordinate seamlessly with in-app chat.</p>
                 </div>
                 
-                <div class="feature-card">
-                    <i class="fas fa-gift feature-icon"></i>
-                    <h3>Exclusive Perks</h3>
-                    <p>Unlock discounts, priority seating, and free snacks at partner venues. Earn rewards for every booking!</p>
+                <!-- Feature 4 -->
+                <div class="feature-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-100">
+                    <div class="w-16 h-16 bg-primary-50 rounded-xl flex items-center justify-center mb-6 transition-all duration-500">
+                        <i class="fas fa-gift text-3xl text-primary-600 feature-icon transition-transform duration-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-900 mb-3">Exclusive Perks</h3>
+                    <p class="text-dark-500">Unlock discounts, priority seating, and free snacks at partner venues. Earn rewards for every booking!</p>
                 </div>
                 
-                <div class="feature-card">
-                    <i class="fas fa-comments feature-icon"></i>
-                    <h3>Social Vibes</h3>
-                    <p>Connect with fellow fans, share event invites, or join trending game-night gatherings nearby.</p>
+                <!-- Feature 5 -->
+                <div class="feature-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-100">
+                    <div class="w-16 h-16 bg-primary-50 rounded-xl flex items-center justify-center mb-6 transition-all duration-500">
+                        <i class="fas fa-comments text-3xl text-primary-600 feature-icon transition-transform duration-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-900 mb-3">Social Vibes</h3>
+                    <p class="text-dark-500">Connect with fellow fans, share event invites, or join trending game-night gatherings nearby.</p>
                 </div>
                 
-                <div class="feature-card">
-                    <i class="fas fa-bell feature-icon"></i>
-                    <h3>Never Miss a Match</h3>
-                    <p>Get notified for upcoming matches, read venue reviews, and build your sports-watching community.</p>
+                <!-- Feature 6 -->
+                <div class="feature-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-100">
+                    <div class="w-16 h-16 bg-primary-50 rounded-xl flex items-center justify-center mb-6 transition-all duration-500">
+                        <i class="fas fa-bell text-3xl text-primary-600 feature-icon transition-transform duration-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-900 mb-3">Never Miss a Match</h3>
+                    <p class="text-dark-500">Get notified for upcoming matches, read venue reviews, and build your sports-watching community.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- How It Works Section -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <h2>How It Works</h2>
-                <p>Find your perfect spot in just a few simple steps</p>
+    <section class="py-20 bg-gray-50" id="how-it-works">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="inline-block bg-primary-50 text-primary-600 px-4 py-1 rounded-full text-sm font-medium mb-3">OUR PROCESS</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-4">Find Your Perfect Spot in Minutes</h2>
+                <p class="text-dark-500">Simple steps to book the best venues for watching your favorite sports with friends.</p>
             </div>
             
-            <div class="steps">
-                <div class="step">
-                    <h3>Search By Game</h3>
-                    <p>Enter the sport, team, or specific game you want to watch. Our app shows venues that are confirmed to be showing your event.</p>
-                </div>
-                
-                <div class="step">
-                    <h3>Browse Venues</h3>
-                    <p>Compare venues by ratings, amenities, distance, or special offers. See real photos and reviews from other fans.</p>
-                </div>
-                
-                <div class="step">
-                    <h3>Book Instantly</h3>
-                    <p>Reserve your table or section directly through the app. Secure your spot with just a few taps.</p>
-                </div>
-                
-                <div class="step">
-                    <h3>Enjoy The Game</h3>
-                    <p>Show up, check in through the app, and enjoy the game! Rate your experience afterward to help other fans.</p>
+            <div class="relative">
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    <!-- Step 1 -->
+                    <div class="relative bg-white rounded-2xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="absolute -left-4 top-6 w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold z-10">1</div>
+                        <div class="step-connector"></div>
+                        <h3 class="text-xl font-bold text-dark-900 mb-3">Search By Game</h3>
+                        <p class="text-dark-500">Enter the sport, team, or specific game you want to watch. Our app shows venues that are confirmed to be showing your event.</p>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="relative bg-white rounded-2xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="absolute -left-4 top-6 w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold z-10">2</div>
+                        <div class="step-connector"></div>
+                        <h3 class="text-xl font-bold text-dark-900 mb-3">Browse Venues</h3>
+                        <p class="text-dark-500">Compare venues by ratings, amenities, distance, or special offers. See real photos and reviews from other fans.</p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="relative bg-white rounded-2xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="absolute -left-4 top-6 w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold z-10">3</div>
+                        <div class="step-connector"></div>
+                        <h3 class="text-xl font-bold text-dark-900 mb-3">Book Instantly</h3>
+                        <p class="text-dark-500">Reserve your table or section directly through the app. Secure your spot with just a few taps.</p>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="relative bg-white rounded-2xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="absolute -left-4 top-6 w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold z-10">4</div>
+                        <h3 class="text-xl font-bold text-dark-900 mb-3">Enjoy The Game</h3>
+                        <p class="text-dark-500">Show up, check in through the app, and enjoy the game! Rate your experience afterward to help other fans.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-header">
-                <h2>What Fans Are Saying</h2>
-                <p>Join thousands of satisfied sports enthusiasts</p>
+    <section class="py-20 bg-white" id="testimonials">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="inline-block bg-primary-50 text-primary-600 px-4 py-1 rounded-full text-sm font-medium mb-3">TESTIMONIALS</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-4">What Our Fans Say</h2>
+                <p class="text-dark-500">Join thousands of sports enthusiasts who've transformed their game-watching experience.</p>
             </div>
             
-            <div class="testimonial-slider">
-                <div class="testimonial-slide active">
-                    <p class="quote">"Pitch Party saved our Champions League final night! We found an amazing venue with a giant screen and great atmosphere, all booked in seconds."</p>
-                    <p class="author">Mike Johnson</p>
-                    <p class="author-title">Soccer Fan, Chicago</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card bg-white rounded-2xl p-8 border border-gray-100 hover:border-primary-100 transition-colors duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="flex -space-x-2">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-12 h-12 rounded-full border-2 border-white" alt="User">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold">Mike Johnson</h4>
+                            <div class="flex items-center text-sm text-dark-500">
+                                <i class="fas fa-map-marker-alt mr-1 text-primary-500"></i>
+                                <span>Chicago, IL</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-dark-600 mb-6">
+                        "Pitch Party saved our Champions League final night! We found an amazing venue with a giant screen and great atmosphere, all booked in seconds."
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <span class="ml-2 text-sm font-medium">5.0</span>
+                    </div>
                 </div>
                 
-                <div class="testimonial-slide">
-                    <p class="quote">"As a venue owner, this app has brought in so many new customers during game days. The booking system is seamless, and the fans are always happy!"</p>
-                    <p class="author">Sarah Williams</p>
-                    <p class="author-title">Owner, The Sideline Bar</p>
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card bg-white rounded-2xl p-8 border border-gray-100 hover:border-primary-100 transition-colors duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="flex -space-x-2">
+                            <img src="https://randomuser.me/api/portraits/women/45.jpg" class="w-12 h-12 rounded-full border-2 border-white" alt="User">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold">Sarah Williams</h4>
+                            <div class="flex items-center text-sm text-dark-500">
+                                <i class="fas fa-map-marker-alt mr-1 text-primary-500"></i>
+                                <span>Denver, CO</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-dark-600 mb-6">
+                        "As a venue owner, this app has brought in so many new customers during game days. The booking system is seamless, and the fans are always happy!"
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <span class="ml-2 text-sm font-medium">5.0</span>
+                    </div>
                 </div>
                 
-                <div class="testimonial-slide">
-                    <p class="quote">"I organize weekly basketball watch parties, and Pitch Party makes it incredibly easy to find venues that can accommodate our large group. The split payment feature is a game-changer!"</p>
-                    <p class="author">David Chen</p>
-                    <p class="author-title">Basketball Fan, Austin</p>
-                </div>
-                
-                <div class="testimonial-dots">
-                    <span class="dot active" data-slide="0"></span>
-                    <span class="dot" data-slide="1"></span>
-                    <span class="dot" data-slide="2"></span>
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card bg-white rounded-2xl p-8 border border-gray-100 hover:border-primary-100 transition-colors duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="flex -space-x-2">
+                            <img src="https://randomuser.me/api/portraits/men/68.jpg" class="w-12 h-12 rounded-full border-2 border-white" alt="User">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold">David Chen</h4>
+                            <div class="flex items-center text-sm text-dark-500">
+                                <i class="fas fa-map-marker-alt mr-1 text-primary-500"></i>
+                                <span>Austin, TX</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-dark-600 mb-6">
+                        "I organize weekly basketball watch parties, and Pitch Party makes it incredibly easy to find venues that can accommodate our large group."
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star-half-alt text-yellow-400"></i>
+                        </div>
+                        <span class="ml-2 text-sm font-medium">4.5</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Download Pitch Party Today</h2>
-            <p>Turn every game into a celebration. Get the best seats, the loudest cheers, and the most unforgettable nights.</p>
-            
-            <div class="app-buttons">
-                <a href="#" class="app-button">
-                    <i class="fab fa-apple"></i>
-                    <span>
-                        <span class="small-text">Download on the</span>
-                        <span class="big-text">App Store</span>
-                    </span>
-                </a>
+    <section class="cta-gradient text-white py-20">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">Ready for the Ultimate Game Experience?</h2>
+                <p class="text-xl text-white/90 mb-10">Download Pitch Party today and never miss a game with friends again.</p>
                 
-                <a href="#" class="app-button">
-                    <i class="fab fa-google-play"></i>
-                    <span>
-                        <span class="small-text">Get it on</span>
-                        <span class="big-text">Google Play</span>
-                    </span>
-                </a>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="#" class="flex items-center justify-center sm:justify-start bg-white text-dark-800 hover:bg-gray-100 px-8 py-4 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1">
+                        <i class="fab fa-apple text-3xl mr-4"></i>
+                        <div class="text-left">
+                            <div class="text-xs">Download on the</div>
+                            <div class="font-semibold text-lg">App Store</div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="flex items-center justify-center sm:justify-start bg-dark-800 hover:bg-dark-700 text-white px-8 py-4 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1">
+                        <i class="fab fa-google-play text-3xl mr-4"></i>
+                        <div class="text-left">
+                            <div class="text-xs">Get it on</div>
+                            <div class="font-semibold text-lg">Google Play</div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Pitch Party</h3>
-                    <p>Your gateway to live game nights, unleashed. Find the perfect venue for every match.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
+    <footer class="bg-dark-950 text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+                <!-- Column 1 -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-futbol text-white"></i>
+                        </div>
+                        <span class="text-xl font-display font-bold">PitchParty</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Your gateway to live game nights, unleashed. Find the perfect venue for every match.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-tiktok text-lg"></i>
+                        </a>
                     </div>
                 </div>
                 
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Partner With Us</a></li>
-                        <li><a href="#">Press</a></li>
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Partner With Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Press</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Venue Owners</a></li>
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Resources</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Community</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Venue Owners</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-column">
-                    <h3>Legal</h3>
-                    <ul>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                        <li><a href="#">Accessibility</a></li>
+                <!-- Column 4 -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Sports</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Soccer</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Basketball</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Football</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Baseball</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 5 -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cookie Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Accessibility</a></li>
                     </ul>
                 </div>
             </div>
             
-            <div class="footer-bottom">
-                <p>&copy; 2025 Pitch Party. All rights reserved.</p>
+            <div class="pt-8 border-t border-dark-800 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 PitchParty. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Login Modal -->
-    <div class="modal" id="login-modal">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <h2>Sign In</h2>
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" class="form-control" required>
-                </div>
-                <button type="submit" class="btn">Sign In</button>
-                <p class="text-center" style="margin-top: 1rem;">
-                    Don't have an account? <a href="#" id="show-signup">Sign up</a>
-                </p>
-            </form>
-        </div>
-    </div>
-
-    <!-- Signup Modal -->
-    <div class="modal" id="signup-modal">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <h2>Create Account</h2>
-            <form id="signup-form">
-                <div class="form-group">
-                    <label for="fullname">Full Name</label>
-                    <input type="text" id="fullname" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="favorite-sports">Favorite Sports (select multiple)</label>
-                    <select id="favorite-sports" class="form-control" multiple>
-                        <option>Soccer</option>
-                        <option>Basketball</option>
-                        <option>Football</option>
-                        <option>Baseball</option>
-                        <option>Hockey</option>
-                        <option>Rugby</option>
-                        <option>Cricket</option>
-                        <option>Tennis</option>
-                        <option>Golf</option>
-                        <option>eSports</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn">Create Account</button>
-                <p class="text-center" style="margin-top: 1rem;">
-                    Already have an account? <a href="#" id="show-login">Sign in</a>
-                </p>
-            </form>
-        </div>
-    </div>
-
     <!-- JavaScript -->
     <script>
-        // Mobile navigation toggle
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('nav ul');
-
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('show');
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
-
+        
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            if (anchor.getAttribute('href') !== '#') {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId !== '#') {
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            window.scrollTo({
-                                top: targetElement.offsetTop - 80,
-                                behavior: 'smooth'
-                            });
-                            // Close mobile menu if open
-                            navMenu.classList.remove('show');
-                        }
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        mobileMenu.classList.add('hidden');
                     }
-                });
-            }
-        });
-
-        // Testimonial slider
-        const slides = document.querySelectorAll('.testimonial-slide');
-        const dots = document.querySelectorAll('.dot');
-        let currentSlide = 0;
-
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-            currentSlide = index;
-        }
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showSlide(index);
+                }
             });
         });
-
-        // Auto-rotate testimonials
-        setInterval(() => {
-            let nextSlide = currentSlide + 1;
-            if (nextSlide >= slides.length) {
-                nextSlide = 0;
-            }
-            showSlide(nextSlide);
-        }, 5000);
-
-       // Modal functionality
-const loginBtn = document.getElementById('login-btn');
-const signupBtn = document.getElementById('signup-btn');
-const loginModal = document.getElementById('login-modal');
-const signupModal = document.getElementById('signup-modal');
-const closeButtons = document.querySelectorAll('.close-modal');
-const showSignupLink = document.getElementById('show-signup');
-const showLoginLink = document.getElementById('show-login');
-const downloadBtn = document.getElementById('download-btn');
-
-function openModal(modal) {
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-function closeModal(modal) {
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-function closeAllModals() {
-    loginModal.style.display = 'none';
-    signupModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-loginBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    openModal(loginModal);
-});
-
-signupBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    openModal(signupModal);
-});
-
-downloadBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    alert('Thanks for your interest! The app download will be available soon.');
-});
-
-closeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        closeAllModals();
-    });
-});
-
-// Switch between login and signup modals
-showSignupLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    closeModal(loginModal);
-    openModal(signupModal);
-});
-
-showLoginLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    closeModal(signupModal);
-    openModal(loginModal);
-});
-
-// Close modal when clicking outside
-window.addEventListener('click', (e) => {
-    if (e.target === loginModal) {
-        closeModal(loginModal);
-    }
-    if (e.target === signupModal) {
-        closeModal(signupModal);
-    }
-});
-
-// Form submission handling
-const loginForm = document.getElementById('login-form');
-const signupForm = document.getElementById('signup-form');
-
-loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    // Here you would normally send this data to your server
-    console.log('Login attempt:', { email, password });
-    
-    // Simple validation feedback
-    if (email && password) {
-        alert('Login successful! Welcome back to Pitch Party.');
-        closeAllModals();
-        loginForm.reset();
-    } else {
-        alert('Please fill in all fields');
-    }
-});
-
-signupForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const fullname = document.getElementById('fullname').value;
-    const email = document.getElementById('signup-email').value;
-    const password = document.getElementById('signup-password').value;
-    
-    // Get selected sports (multiple select)
-    const sportsSelect = document.getElementById('favorite-sports');
-    const selectedSports = Array.from(sportsSelect.selectedOptions).map(option => option.value);
-    
-    // Here you would normally send this data to your server
-    console.log('Signup attempt:', { fullname, email, password, sports: selectedSports });
-    
-    // Simple validation feedback
-    if (fullname && email && password) {
-        alert('Account created successfully! Welcome to Pitch Party.');
-        closeAllModals();
-        signupForm.reset();
-    } else {
-        alert('Please fill in all required fields');
-    }
-});
-
-// Sticky header with scroll effect
-const header = document.querySelector('header');
-let lastScrollTop = 0;
-
-window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    if (scrollTop > 100) {
-        header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-        header.style.padding = '0.7rem 0';
-    } else {
-        header.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.05)';
-        header.style.padding = '1rem 0';
-    }
-    
-    lastScrollTop = scrollTop;
-});
-
-// Animation on scroll functionality
-const animateOnScroll = () => {
-    const elements = document.querySelectorAll('.feature-card, .step, .section-header');
-    
-    elements.forEach(element => {
-        const elementPosition = element.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
         
-        if (elementPosition < windowHeight - 50) {
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
-        }
-    });
-};
-
-// Initialize animation properties
-document.querySelectorAll('.feature-card, .step, .section-header').forEach(element => {
-    element.style.opacity = '0';
-    element.style.transform = 'translateY(20px)';
-    element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-});
-
-// Register scroll event for animations
-window.addEventListener('scroll', animateOnScroll);
-window.addEventListener('load', animateOnScroll);
-
-// Simple venue search simulation
-const searchDemo = () => {
-    const demoVenues = [
-        { name: "Sportszone Bar & Grill", location: "Downtown", rating: 4.7, matches: ["Soccer", "Basketball"] },
-        { name: "Champions Lounge", location: "Westside", rating: 4.5, matches: ["Football", "Basketball"] },
-        { name: "The Final Whistle", location: "Eastside", rating: 4.8, matches: ["Soccer", "Rugby"] },
-        { name: "Game Day Pub", location: "Midtown", rating: 4.6, matches: ["Baseball", "Hockey"] }
-    ];
-    
-    // Demo data could be displayed in a future search results section
-    console.log("Available venues:", demoVenues);
-    
-    // This could be expanded to create a dynamic search results display
-    return demoVenues;
-};
-
-// Initialize venue data
-const availableVenues = searchDemo();
-
-// Add loading animation for buttons
-const buttons = document.querySelectorAll('.btn');
-buttons.forEach(button => {
-    button.addEventListener('click', function(e) {
-        if (!this.classList.contains('loading') && !this.id.includes('login') && !this.id.includes('signup')) {
-            this.classList.add('loading');
-            const originalText = this.textContent;
-            this.textContent = 'Loading...';
+      
+        // Sticky header with scroll effect
+        const header = document.querySelector('header');
+        let lastScrollTop = 0;
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
-            setTimeout(() => {
-                this.classList.remove('loading');
-                this.textContent = originalText;
-            }, 1500);
-        }
-    });
-});
-
-</script>
+            if (scrollTop > 100) {
+                header.classList.add('shadow-md');
+                header.classList.remove('shadow-sm');
+            } else {
+                header.classList.remove('shadow-md');
+                header.classList.add('shadow-sm');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+        
+        // Animation on scroll functionality
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.feature-card, .step, .section-header, .testimonial-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('animate-fade-in');
+                }
+            });
+        };
+        
+        // Initialize animation properties
+        document.querySelectorAll('.feature-card, .step, .section-header, .testimonial-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+        
+        // Register scroll event for animations
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
 </body>
 </html>
