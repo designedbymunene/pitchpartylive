@@ -4,184 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Authentication | Secure Login</title>
-  <style>
-    :root {
-      --primary: #1a73e8;
-      --primary-dark: #0d47a1;
-      --primary-light: #e8f0fe;
-      --success: #34a853;
-      --error: #ea4335;
-      --warning: #fbbc04;
-      --text: #202124;
-      --text-secondary: #5f6368;
-      --background: #ffffff;
-      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    
-    body {
-      background-color: #f8f9fa;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    
-    .auth-container {
-      background: var(--background);
-      border-radius: 12px;
-      box-shadow: var(--card-shadow);
-      width: 100%;
-      max-width: 450px;
-      padding: 40px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .auth-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--primary);
-    }
-    
-    .logo {
-      width: 60px;
-      height: 60px;
-      background-color: var(--primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
-      color: white;
-      font-size: 32px;
-    }
-    
-    .auth-title {
-      color: var(--primary);
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
-    
-    .auth-subtitle {
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-      font-weight: 400;
-      font-size: 16px;
-    }
-    
-    .status-container {
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 24px;
-      background-color: var(--primary-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .status-container.success {
-      background-color: #e6f4ea;
-    }
-    
-    .status-container.error {
-      background-color: #fce8e6;
-    }
-    
-    .status-container.warning {
-      background-color: #fef7e0;
-    }
-    
-    #status {
-      font-size: 16px;
-      font-weight: 500;
-    }
-    
-    .status-icon {
-      display: inline-block;
-      margin-right: 10px;
-      font-size: 20px;
-    }
-    
-    .loader {
-      border: 3px solid #f3f3f3;
-      border-radius: 50%;
-      border-top: 3px solid var(--primary);
-      width: 24px;
-      height: 24px;
-      animation: spin 1s linear infinite;
-      display: inline-block;
-      margin-right: 10px;
-      vertical-align: middle;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .btn {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 4px;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      display: inline-block;
-      text-decoration: none;
-      margin-top: 20px;
-    }
-    
-    .btn:hover {
-      background-color: var(--primary-dark);
-    }
-    
-    .hidden {
-      display: none;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="auth-container">
-    <div class="logo">🔐</div>
-    <h1 class="auth-title">Authentication</h1>
-    <p class="auth-subtitle">Please wait while we process your request...</p>
+<body class="bg-gray-50 text-gray-800 flex items-center justify-center min-h-screen p-5">
+  <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-10 text-center relative overflow-hidden">
+    <!-- Accent top border -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-blue-600"></div>
     
-    <div id="statusContainer" class="status-container">
-      <span id="statusIcon" class="status-icon">
-        <div class="loader"></div>
-      </span>
-      <span id="status">Authenticating...</span>
+    <!-- Logo -->
+    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-3xl">
+      🔐
     </div>
     
-    <a href="/" id="continueBtn" class="btn hidden">Continue to Application</a>
+    <h1 class="text-blue-600 text-2xl font-semibold mb-3">Authentication</h1>
+    <p class="text-gray-500 mb-6">Please wait while we process your request...</p>
+    
+    <div id="statusContainer" class="py-5 px-4 rounded-lg mb-6 bg-blue-50 flex items-center justify-center">
+      <span id="statusIcon" class="mr-3">
+        <div class="w-6 h-6 border-3 border-gray-200 border-t-blue-600 rounded-full animate-spin"></div>
+      </span>
+      <span id="status" class="text-base font-medium">Authenticating...</span>
+    </div>
+    
+    <a href="/" id="continueBtn" class="hidden bg-blue-600 hover:bg-blue-700 text-white py-3 px-5 rounded-md text-base font-medium transition-colors inline-block">
+      Continue to Application
+    </a>
   </div>
 
   <!-- Load Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // Use environment variables from GitHub Pages secrets
-    const SUPABASE_URL = '{{ SUPABASE_URL }}';
-    const SUPABASE_ANON_KEY = '{{ SUPABASE_ANON_KEY }}';
-    
+    // Supabase credentials
+    const SUPABASE_URL = '{{ site.env.SUPABASE_URL }}';
+        const SUPABASE_ANON_KEY = '{{ site.env.SUPABASE_ANON_KEY }}';
+
+        console.log("SUPABASE_URL", SUPABASE_URL);
+        console.log("SUPABASE_ANON_KEY", SUPABASE_ANON_KEY);
+        
     // Create Supabase client
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     
     // Elements
     const statusEl = document.getElementById('status');
@@ -191,29 +53,35 @@
     
     // Parse hash parameters
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
-    const type = hashParams.get('type');
-    const accessToken = hashParams.get('access_token');
-    const refreshToken = hashParams.get('refresh_token');
+    // Also check URL parameters (some auth callbacks use query params instead of hash)
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    const type = hashParams.get('type') || urlParams.get('type');
+    const accessToken = hashParams.get('access_token') || urlParams.get('access_token');
+    const refreshToken = hashParams.get('refresh_token') || urlParams.get('refresh_token');
+    const token = urlParams.get('token');
     
     // Update status with appropriate styling
     function updateStatus(message, status = 'default') {
       statusEl.innerText = message;
       statusIconEl.innerHTML = '';
       
-      statusContainerEl.className = 'status-container';
-      if (status !== 'default') {
-        statusContainerEl.classList.add(status);
-      }
+      // Reset classes
+      statusContainerEl.className = 'py-5 px-4 rounded-lg mb-6 flex items-center justify-center';
       
-      // Add appropriate icon based on status
+      // Add appropriate icon and background based on status
       if (status === 'success') {
-        statusIconEl.innerHTML = '✅';
+        statusContainerEl.classList.add('bg-green-50');
+        statusIconEl.innerHTML = '<span class="text-green-500 text-xl">✅</span>';
       } else if (status === 'error') {
-        statusIconEl.innerHTML = '❌';
+        statusContainerEl.classList.add('bg-red-50');
+        statusIconEl.innerHTML = '<span class="text-red-500 text-xl">❌</span>';
       } else if (status === 'warning') {
-        statusIconEl.innerHTML = '⚠️';
-      } else if (status === 'loading') {
-        statusIconEl.innerHTML = '<div class="loader"></div>';
+        statusContainerEl.classList.add('bg-yellow-50');
+        statusIconEl.innerHTML = '<span class="text-yellow-500 text-xl">⚠️</span>';
+      } else {
+        statusContainerEl.classList.add('bg-blue-50');
+        statusIconEl.innerHTML = '<div class="w-6 h-6 border-3 border-gray-200 border-t-blue-600 rounded-full animate-spin"></div>';
       }
     }
     
@@ -227,7 +95,7 @@
       try {
         if (accessToken && refreshToken) {
           // Restore the session so user is logged in
-          const { data, error } = await supabase.auth.setSession({
+          const { data, error } = await supabaseClient.auth.setSession({
             access_token: accessToken,
             refresh_token: refreshToken,
           });
@@ -244,7 +112,7 @@
             
           case 'recovery':
             updateStatus('Password reset link confirmed. Please set a new password.', 'warning');
-            // Redirect to password reset form
+            // Redirect to password reset form with tokens
             window.location.href = `/reset-password.html#access_token=${accessToken}&refresh_token=${refreshToken}`;
             return;
             
@@ -259,6 +127,17 @@
             break;
             
           default:
+            // Check if we have a token for recovery without having been redirected yet
+            if (token && urlParams.get('type') === 'recovery') {
+              updateStatus('Password reset link confirmed. Redirecting...', 'warning');
+              // Get the redirect URL from the parameters
+              const redirectTo = urlParams.get('redirect_to');
+              if (redirectTo) {
+                window.location.href = redirectTo;
+                return;
+              }
+            }
+            
             updateStatus('Authentication successful.', 'success');
             showContinueButton();
         }
@@ -268,12 +147,6 @@
         showContinueButton('/?error=true');
       }
     }
-    
-    // Replace placeholders with actual environment variables 
-    // This will be processed by GitHub Pages when deployed
-    document.body.innerHTML = document.body.innerHTML
-      .replace('{{ SUPABASE_URL }}', '{{ site.env.SUPABASE_URL }}')
-      .replace('{{ SUPABASE_ANON_KEY }}', '{{ site.env.SUPABASE_ANON_KEY }}');
     
     // Start auth callback process
     handleAuthCallback();
