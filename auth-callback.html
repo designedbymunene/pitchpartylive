@@ -35,11 +35,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     // Supabase credentials
-    const SUPABASE_URL = '{{ site.env.SUPABASE_URL }}';
-        const SUPABASE_ANON_KEY = '{{ site.env.SUPABASE_ANON_KEY }}';
+    const SUPABASE_URL = 'https://nrchxicfpvstsyhaceyj.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5yY2h4aWNmcHZzdHN5aGFjZXlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5MzYzMDcsImV4cCI6MjA1OTUxMjMwN30.-aAK0onSA4QrfBbRYMeEOYGbpzzkyLROue6AY8IWs2A';
 
-        console.log("SUPABASE_URL", SUPABASE_URL);
-        console.log("SUPABASE_ANON_KEY", SUPABASE_ANON_KEY);
         
     // Create Supabase client
     const { createClient } = supabase;
