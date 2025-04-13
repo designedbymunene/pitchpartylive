@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authentication | Secure Login</title>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #0d47a1;
+      --primary-light: #e8f0fe;
+      --success: #34a853;
+      --error: #ea4335;
+      --warning: #fbbc04;
+      --text: #202124;
+      --text-secondary: #5f6368;
+      --background: #ffffff;
+      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f8f9fa;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .auth-container {
+      background: var(--background);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      width: 100%;
+      max-width: 450px;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .auth-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary);
+    }
+    
+    .logo {
+      width: 60px;
+      height: 60px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      color: white;
+      font-size: 32px;
+    }
+    
+    .auth-title {
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    
+    .auth-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      font-weight: 400;
+      font-size: 16px;
+    }
+    
+    .status-container {
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      background-color: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .status-container.success {
+      background-color: #e6f4ea;
+    }
+    
+    .status-container.error {
+      background-color: #fce8e6;
+    }
+    
+    .status-container.warning {
+      background-color: #fef7e0;
+    }
+    
+    #status {
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    .status-icon {
+      display: inline-block;
+      margin-right: 10px;
+      font-size: 20px;
+    }
+    
+    .loader {
+      border: 3px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 3px solid var(--primary);
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      display: inline-block;
+      text-decoration: none;
+      margin-top: 20px;
+    }
+    
+    .btn:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <div class="logo">🔐</div>
+    <h1 class="auth-title">Authentication</h1>
+    <p class="auth-subtitle">Please wait while we process your request...</p>
+    
+    <div id="statusContainer" class="status-container">
+      <span id="statusIcon" class="status-icon">
+        <div class="loader"></div>
+      </span>
+      <span id="status">Authenticating...</span>
+    </div>
+    
+    <a href="/" id="continueBtn" class="btn hidden">Continue to Application</a>
+  </div>
+
+  <!-- Load Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Use environment variables from GitHub Pages secrets
+    const SUPABASE_URL = '{{ SUPABASE_URL }}';
+    const SUPABASE_ANON_KEY = '{{ SUPABASE_ANON_KEY }}';
+    
+    // Create Supabase client
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // Elements
+    const statusEl = document.getElementById('status');
+    const statusIconEl = document.getElementById('statusIcon');
+    const statusContainerEl = document.getElementById('statusContainer');
+    const continueBtn = document.getElementById('continueBtn');
+    
+    // Parse hash parameters
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+    const type = hashParams.get('type');
+    const accessToken = hashParams.get('access_token');
+    const refreshToken = hashParams.get('refresh_token');
+    
+    // Update status with appropriate styling
+    function updateStatus(message, status = 'default') {
+      statusEl.innerText = message;
+      statusIconEl.innerHTML = '';
+      
+      statusContainerEl.className = 'status-container';
+      if (status !== 'default') {
+        statusContainerEl.classList.add(status);
+      }
+      
+      // Add appropriate icon based on status
+      if (status === 'success') {
+        statusIconEl.innerHTML = '✅';
+      } else if (status === 'error') {
+        statusIconEl.innerHTML = '❌';
+      } else if (status === 'warning') {
+        statusIconEl.innerHTML = '⚠️';
+      } else if (status === 'loading') {
+        statusIconEl.innerHTML = '<div class="loader"></div>';
+      }
+    }
+    
+    // Show continue button
+    function showContinueButton(href = '/') {
+      continueBtn.classList.remove('hidden');
+      continueBtn.href = href;
+    }
+    
+    async function handleAuthCallback() {
+      try {
+        if (accessToken && refreshToken) {
+          // Restore the session so user is logged in
+          const { data, error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+          
+          if (error) throw error;
+        }
+        
+        // Handle different types of redirect actions
+        switch (type) {
+          case 'signup':
+            updateStatus('Email confirmed! Your account is now active.', 'success');
+            showContinueButton('/');
+            break;
+            
+          case 'recovery':
+            updateStatus('Password reset link confirmed. Please set a new password.', 'warning');
+            // Redirect to password reset form
+            window.location.href = `/reset-password.html#access_token=${accessToken}&refresh_token=${refreshToken}`;
+            return;
+            
+          case 'magiclink':
+            updateStatus('Successfully authenticated via magic link!', 'success');
+            showContinueButton('/');
+            break;
+            
+          case 'email_change':
+            updateStatus('Email address successfully updated.', 'success');
+            showContinueButton('/');
+            break;
+            
+          default:
+            updateStatus('Authentication successful.', 'success');
+            showContinueButton();
+        }
+      } catch (err) {
+        console.error(err);
+        updateStatus(`Authentication error: ${err.message}`, 'error');
+        showContinueButton('/?error=true');
+      }
+    }
+    
+    // Replace placeholders with actual environment variables 
+    // This will be processed by GitHub Pages when deployed
+    document.body.innerHTML = document.body.innerHTML
+      .replace('{{ SUPABASE_URL }}', '{{ site.env.SUPABASE_URL }}')
+      .replace('{{ SUPABASE_ANON_KEY }}', '{{ site.env.SUPABASE_ANON_KEY }}');
+    
+    // Start auth callback process
+    handleAuthCallback();
+  </script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Email confirmation successful - Your account is now verified">
+    <title>Email Confirmed Successfully | PitchParty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+        .bounce {
+            animation: bounce 1.5s infinite;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            0% {
+                transform: translate(0, -50px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--trans-x), var(--trans-y)) rotate(var(--rotation));
+                opacity: 0;
+            }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        /* iOS app banner/link styling */
+        .app-banner {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+    <!-- Mobile App Banner -->
+    <div id="appBanner" class="fixed top-0 left-0 right-0 app-banner py-3 px-4 z-50 border-b border-gray-200 hidden">
+        <div class="flex items-center justify-between max-w-md mx-auto">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                    <i class="fas fa-chart-line text-white"></i>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-900">PitchParty App</h4>
+                    <p class="text-xs text-gray-500">Continue in our mobile app</p>
+                </div>
+            </div>
+            <div class="flex space-x-2">
+                <button id="openAppBtn" class="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                    Open App
+                </button>
+                <button id="dismissBannerBtn" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div id="confettiContainer" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+
+    <div class="max-w-md w-full mx-auto">
+        <div class="gradient-bg text-white rounded-t-2xl p-8 text-center shadow-lg">
+            <div class="w-24 h-24 bg-white rounded-full mx-auto flex items-center justify-center mb-6 shadow-md">
+                <i class="fas fa-check-circle text-5xl text-green-500 bounce"></i>
+            </div>
+            <h1 class="text-3xl font-bold mb-2">Email Confirmed!</h1>
+            <p class="opacity-90">Your email address has been successfully verified.</p>
+        </div>
+        
+        <div class="bg-white rounded-b-2xl shadow-lg px-8 pt-8 pb-10">
+            <div class="space-y-6">
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-user-check text-blue-500"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-gray-900">Account Activated</h3>
+                        <p class="text-gray-500 text-sm">You can now access all features of our platform.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-green-500"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-gray-900">Security Verified</h3>
+                        <p class="text-gray-500 text-sm">Your account is now protected with email verification.</p>
+                    </div>
+                </div>
+                
+                <!-- App Redirection Options -->
+                <div class="flex flex-col space-y-3 pt-4">
+                    <button id="openAppButton" class="w-full flex items-center justify-center px-4 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200 pulse">
+                        Open in PitchParty App
+                        <i class="fas fa-external-link-alt ml-2"></i>
+                    </button>
+                    
+                    <a href="/login" class="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md shadow-sm text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                        Continue to Web Login
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Countdown Timer -->
+            <div class="mt-6 flex justify-center items-center">
+                <div id="countdownContainer" class="text-center px-4 py-2 bg-blue-50 rounded-full">
+                    <span class="text-sm text-blue-600">
+                        Opening app in <span id="countdown">5</span> seconds...
+                    </span>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <p class="text-xs text-gray-500">
+                    Having trouble? <a href="/support" class="text-blue-500 hover:text-blue-700">Contact support</a>
+                </p>
+            </div>
+        </div>
+        
+        <div class="mt-6 text-center">
+            <p class="text-xs text-gray-500">
+                © 2025 PitchParty. All rights reserved.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Generate confetti
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#2563eb', '#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe', '#dbeafe'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Randomize confetti properties
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 8 + 6;
+                const translateX = (Math.random() - 0.5) * window.innerWidth;
+                const translateY = Math.random() * window.innerHeight + 100;
+                const rotation = Math.random() * 360;
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 1.5;
+                
+                // Set CSS properties
+                confetti.style.backgroundColor = color;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.setProperty('--trans-x', `${translateX}px`);
+                confetti.style.setProperty('--trans-y', `${translateY}px`);
+                confetti.style.setProperty('--rotation', `${rotation}deg`);
+                confetti.style.animationDuration = `${duration}s`;
+                confetti.style.animationDelay = `${delay}s`;
+                
+                // Position confetti at random horizontal positions at the top
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = '0';
+                
+                container.appendChild(confetti);
+                
+                // Remove confetti after animation completes
+                setTimeout(() => {
+                    confetti.remove();
+                }, (duration + delay) * 1000);
+            }
+        }
+        
+        // Function to open the mobile app
+        function openMobileApp() {
+            // Try to open the Expo app with the pitchparty scheme
+            window.location.href = 'pitchparty://';
+            
+            // Fallback for iOS - check if app opens after a short delay
+            let appOpened = false;
+            const now = Date.now();
+            
+            // Set a timeout to detect if app was successfully opened
+            setTimeout(function() {
+                if (!appOpened && (Date.now() - now < 1100)) {
+                    // App was not opened, show app store link or alternative
+                    document.getElementById('appBanner').classList.remove('hidden');
+                }
+            }, 1000);
+            
+            // Listen for visibility change to detect if app was opened
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    appOpened = true;
+                }
+            });
+        }
+        
+        // Get query parameters (for potential use with auth tokens)
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        
+        // Countdown timer function
+        function startCountdown(seconds) {
+            const countdownEl = document.getElementById('countdown');
+            let timeLeft = seconds;
+            
+            const countdownInterval = setInterval(() => {
+                timeLeft--;
+                countdownEl.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    openMobileApp();
+                }
+            }, 1000);
+            
+            // Allow user to cancel the countdown
+            document.getElementById('countdownContainer').addEventListener('click', () => {
+                clearInterval(countdownInterval);
+                document.getElementById('countdownContainer').classList.add('hidden');
+            });
+        }
+        
+        // Set up event listeners and initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create celebratory confetti effect
+            createConfetti();
+            
+            // Set up button event listeners
+            const openAppButton = document.getElementById('openAppButton');
+            openAppButton.addEventListener('click', openMobileApp);
+            
+            // Banner button events
+            document.getElementById('openAppBtn')?.addEventListener('click', openMobileApp);
+            document.getElementById('dismissBannerBtn')?.addEventListener('click', function() {
+                document.getElementById('appBanner').classList.add('hidden');
+            });
+            
+            // Button animation effects
+            openAppButton.addEventListener('mouseenter', function() {
+                this.querySelector('i').classList.add('fa-bounce');
+            });
+            
+            openAppButton.addEventListener('mouseleave', function() {
+                this.querySelector('i').classList.remove('fa-bounce');
+            });
+            
+            // Start countdown for app redirect
+            startCountdown(5);
+            
+            // Check if we should attempt to pass auth tokens to the app
+            const token = getQueryParam('token') || '';
+            if (token) {
+                // If token exists, prepare it for passing to the mobile app
+                openAppButton.href = `pitchparty://auth?token=${encodeURIComponent(token)}`;
+            }
+        });
+    </script>
+</body>
+</html>
